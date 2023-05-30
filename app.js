@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -18,5 +19,12 @@ app.use(
     },
   })
 );
+
+/**
+ * morgan is a Node.js and Express middleware to log HTTP requests and errors, and simplifies the process
+ */
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 module.exports = app;
