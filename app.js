@@ -3,6 +3,10 @@ const helmet = require('helmet');
 
 const app = express();
 
+/**
+ * helmet helps secure Node.js applications by setting several HTTP headers.
+ * It acts as middleware for Express.
+ */
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
