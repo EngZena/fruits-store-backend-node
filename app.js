@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -26,5 +27,15 @@ app.use(
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+/**
+ * rateLimit a technique used to control the amount of incoming or outgoing traffic within a network.
+ */
+const limiter = rateLimit({
+  max: 100,
+  windowMS: 60 * 60 * 1000,
+  message: 'Too many request from this IP please try again in an hour',
+});
+app.use('/api', limiter);
 
 module.exports = app;
