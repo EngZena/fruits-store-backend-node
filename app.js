@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
+const cors = require('cors');
 
 const app = express();
 
@@ -46,5 +47,12 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
  * xss is a module used to filter input from users to prevent XSS attacks
  */
 app.use(xss());
+
+/**
+ *  cors is an HTTP-header based mechanism that allows a server to indicate any domain other than
+ *  its own from which a browser should permit loading resources.
+ */
+app.use(cors());
+app.options('=', cors());
 
 module.exports = app;
