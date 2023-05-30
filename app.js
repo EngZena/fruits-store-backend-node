@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const xss = require('xss-clean');
 
 const app = express();
 
@@ -37,5 +38,13 @@ const limiter = rateLimit({
   message: 'Too many request from this IP please try again in an hour',
 });
 app.use('/api', limiter);
+
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+/**
+ * xss is a module used to filter input from users to prevent XSS attacks
+ */
+app.use(xss());
 
 module.exports = app;

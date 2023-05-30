@@ -23,7 +23,8 @@
     "express-rate-limit": "^6.7.0",
     "helmet": "^7.0.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "eslint": "^8.41.0",
