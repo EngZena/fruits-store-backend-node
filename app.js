@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
 const cors = require('cors');
+const AppError = require('./utils/appError');
 
 const app = express();
 
@@ -54,5 +55,13 @@ app.use(xss());
  */
 app.use(cors());
 app.options('=', cors());
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));
+});
 
 module.exports = app;
