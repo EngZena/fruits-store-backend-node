@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const mangoose = require('mongoose');
 const validator = require('validator');
 
@@ -46,6 +47,13 @@ userSchema.pre('/^find/', function (next) {
   this.find({ active: { $ne: false } });
   next();
 });
+
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mangoose.model('User', userSchema);
 
