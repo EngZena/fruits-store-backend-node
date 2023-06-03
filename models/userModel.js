@@ -5,11 +5,11 @@ const validator = require('validator');
 const userSchema = new mangoose.Schema({
   name: {
     type: String,
-    requierd: [true, 'Please provide your name'],
+    required: [true, 'Please provide your name'],
   },
   email: {
     type: String,
-    requierd: [true, 'Please provide your email'],
+    required: [true, 'Please provide your email'],
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, 'Please provice a valid email'],
