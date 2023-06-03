@@ -5,11 +5,11 @@ const validator = require('validator');
 const userSchema = new mangoose.Schema({
   name: {
     type: String,
-    requierd: [true, 'Please provide your name'],
+    required: [true, 'Please provide your name'],
   },
   email: {
     type: String,
-    requierd: [true, 'Please provide your email'],
+    required: [true, 'Please provide your email'],
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, 'Please provice a valid email'],
@@ -41,6 +41,15 @@ const userSchema = new mangoose.Schema({
     default: true,
     select: false,
   },
+});
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+
+  this.passwordConfirm = undefined;
+  next();
 });
 
 userSchema.pre('/^find/', function (next) {
