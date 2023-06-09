@@ -10,6 +10,7 @@ This is the customer relationship manager website created for technical proof of
 
 - Development purposes
 
+  - [mongoose](https://www.npmjs.com/package/mongoose)
   - [nodemon](https://www.npmjs.com/package/nodemon)
   - [dotenv](https://www.npmjs.com/package/dotenv)
   - [eslint](https://eslint.org/)
