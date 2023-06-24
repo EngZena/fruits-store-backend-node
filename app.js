@@ -43,8 +43,10 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(
+  express.urlencoded({ extended: true, limit: '50mb', parameterLimit: 50000 })
+);
 
 /**
  * xss is a module used to filter input from users to prevent XSS attacks
