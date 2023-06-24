@@ -6,8 +6,14 @@ const fruitSchema = new mangoose.Schema({
     requierd: [true, 'Please provide a fruit name'],
     unique: true,
   },
-  imageName: {
+  image: {
     type: String,
+    validate: {
+      validator: function (val) {
+        return val.includes('data:image/png;base64,');
+      },
+      message: 'image should be encoded into Base64',
+    },
   },
   price: {
     type: mangoose.Decimal128,
