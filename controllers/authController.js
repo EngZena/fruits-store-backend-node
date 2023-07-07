@@ -65,6 +65,39 @@ exports.logout = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success' });
 });
 
+// TODO: create a reset password API to complete this feature
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(
+      new AppError(`There is no user with this email ${req.body.email}`),
+      404
+    );
+  }
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  const resetURL = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/resetPassword/${resetToken}`;
+  try {
+    await new Email(user, resetURL).sendPasswordReset(
+      'Update your credentials'
+    );
+    res.status(200).json({
+      status: 'success',
+      message: 'Token send to Email',
+    });
+  } catch (err) {
+    user.passwordResetExpires = undefined;
+    user.passwordResetToken = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError('There was an error ending the email. Try again later')
+    );
+  }
+});
+
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (
