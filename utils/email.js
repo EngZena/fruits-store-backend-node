@@ -1,5 +1,6 @@
 const htmlToText = require('html-to-text');
 const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
 const { promisify } = require('util');
 const fs = require('fs');
 
@@ -8,6 +9,7 @@ const readFile = promisify(fs.readFile);
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
+    this.user = user;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
     this.from = `Fruits store  <${process.env.EMAIL_FROM}>`;
@@ -55,5 +57,26 @@ module.exports = class Email {
 
   async sendWelcome() {
     await this.send('welcome', 'Welcome to the Fruits store Family!');
+  }
+
+  async sendPasswordReset(subject) {
+    const htmlSource = fs.readFileSync(
+      `./../fruits-store-backend/emails/passwordReset.html`,
+      'utf-8'
+    );
+    const template = handlebars.compile(htmlSource);
+    const replacements = {
+      name: this.user.name,
+      resetURL: this.url,
+    };
+    const htmlToSend = template(replacements);
+    const mailOptions = {
+      from: this.from,
+      to: this.to,
+      html: htmlToSend,
+      text: htmlToSend.toString(),
+      subject,
+    };
+    await this.newTransport().sendMail(mailOptions);
   }
 };
