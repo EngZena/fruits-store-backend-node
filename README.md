@@ -49,7 +49,9 @@ This is the customer relationship manager website created for technical proof of
     - GET
 - Generic API handler
 - Generic error handler
-- After the user completes signup, he will receive a welcome email.
+- Emails
+  - Emails with HTML template like sign-up email.
+  - Emails with HTML template containing database values, like forgot password emails.
 
 ## Development server
 
