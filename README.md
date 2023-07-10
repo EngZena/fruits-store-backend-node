@@ -31,6 +31,7 @@ This is the customer relationship manager website created for technical proof of
 - Email purposes
   - [nodemailer](https://www.npmjs.com/package/nodemailer)
   - [html-to-text](https://www.npmjs.com/package/html-to-text)
+  - [handlebars](https://www.npmjs.com/package/handlebars)
 
 ### Content of this project:
 
