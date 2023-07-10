@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const mangoose = require('mongoose');
+const mongoose = require('mongoose');
 const validator = require('validator');
 
-const userSchema = new mangoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please provide your name'],
@@ -13,7 +13,7 @@ const userSchema = new mangoose.Schema({
     required: [true, 'Please provide your email'],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, 'Please provice a valid email'],
+    validate: [validator.isEmail, 'Please provide a valid email'],
   },
   role: {
     type: String,
@@ -55,6 +55,19 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  this.passwordConfirm = undefined;
+  next();
+});
+
 userSchema.pre('/^find/', function (next) {
   this.find({ active: { $ne: false } });
   next();
@@ -78,7 +91,7 @@ userSchema.methods.changePasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-userSchema.methods.createPasswordResetToken = () => {
+userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
   this.passwordResetToken = crypto
     .createHash('sha256')
@@ -88,6 +101,6 @@ userSchema.methods.createPasswordResetToken = () => {
   return resetToken;
 };
 
-const User = mangoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
