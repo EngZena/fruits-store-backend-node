@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const C = require('./utils/log');
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
+import C from './utils/log';
 
 /**
  * uncaughtException means no code was looking for that execption
