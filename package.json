@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
+    "@babel/node": "^7.22.6",
     "@babel/plugin-transform-modules-commonjs": "^7.22.5",
     "@babel/preset-env": "^7.22.9",
     "eslint": "^8.41.0",
