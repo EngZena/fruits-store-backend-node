@@ -1,12 +1,13 @@
-const express = require('express');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-const xss = require('xss-clean');
-const cors = require('cors');
-const AppError = require('./utils/appError');
-const userRouter = require('./routes/userRoutes');
-const fruitRouter = require('./routes/fruitRoutes');
+import cors from 'cors';
+import express from 'express';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import xss from 'xss-clean';
+
+import fruitRouter from './routes/fruitRoutes';
+import userRouter from './routes/userRoutes';
+import AppError from './utils/appError';
 
 const app = express();
 
@@ -70,4 +71,4 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));
 });
 
-module.exports = app;
+export default app;
