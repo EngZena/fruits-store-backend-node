@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
 
 import User from '../models/userModel';
+import * as Constants from '../utils';
 import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
 import Email from '../utils/email';
@@ -20,7 +21,8 @@ const createAndSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  if (process.env.NODE_ENV === Constants.prodEnvironment)
+    cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({

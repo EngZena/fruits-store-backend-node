@@ -4,6 +4,8 @@ import { convert } from 'html-to-text';
 import nodemailer from 'nodemailer';
 import { promisify } from 'util';
 
+import * as Constants from './constants';
+
 const readFile = promisify(fs.readFile);
 
 export default class Email {
@@ -16,7 +18,7 @@ export default class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV.trim() === 'production') {
+    if (process.env.NODE_ENV.trim() === Constants.prodEnvironment) {
       return nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
