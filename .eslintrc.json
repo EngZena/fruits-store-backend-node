@@ -1,15 +1,8 @@
 {
-  "extends": [
-    "airbnb",
-    "prettier",
-    "plugin:node/recommended"
-  ],
-  "plugins": [
-    "prettier",
-    "node"
-  ],
+  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+  "plugins": ["prettier", "node"],
   "parserOptions": {
-    "ecmaVersion": 2020,
+    "ecmaVersion": 2022,
     "sourceType": "module"
   },
   "rules": {
@@ -27,6 +20,22 @@
     "class-methods-use-this": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }],
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "import/no-import-module-exports": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": {
+          "order": "asc"
+        },
+        "newlines-between": "always"
+      }
+    ],
+    "import/prefer-default-export": "off"
   }
 }
