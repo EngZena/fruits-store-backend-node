@@ -1,6 +1,6 @@
-const mangoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const fruitSchema = new mangoose.Schema({
+const fruitSchema = new mongoose.Schema({
   name: {
     type: String,
     requierd: [true, 'Please provide a fruit name'],
@@ -16,7 +16,7 @@ const fruitSchema = new mangoose.Schema({
     },
   },
   price: {
-    type: mangoose.Decimal128,
+    type: mongoose.Decimal128,
   },
   fruitType: {
     type: String,
@@ -25,6 +25,6 @@ const fruitSchema = new mangoose.Schema({
   },
 });
 
-const Fruit = mangoose.model('Fruit', fruitSchema);
+const Fruit = mongoose.model('Fruit', fruitSchema);
 
-module.exports = Fruit;
+export default Fruit;

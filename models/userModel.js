@@ -1,7 +1,7 @@
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const mongoose = require('mongoose');
-const validator = require('validator');
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import mongoose from 'mongoose';
+import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -61,13 +61,6 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined;
-  next();
-});
-
 userSchema.pre('/^find/', function (next) {
   this.find({ active: { $ne: false } });
   next();
@@ -103,4 +96,4 @@ userSchema.methods.createPasswordResetToken = function () {
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+export default User;

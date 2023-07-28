@@ -1,6 +1,8 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const C = require('./utils/log');
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
+import app from './app';
+import C from './utils/log';
 
 /**
  * uncaughtException means no code was looking for that execption
@@ -9,8 +11,6 @@ process.on('uncaughtException', (error) => {
   C(`uncaughtException 💥💥 ${error.name}: ${error.message}`);
 });
 dotenv.config({ path: `${__dirname}/config.env` });
-
-const app = require('./app');
 
 /**
  * connect to the database

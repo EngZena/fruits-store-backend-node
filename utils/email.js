@@ -1,12 +1,14 @@
-const htmlToText = require('html-to-text');
-const nodemailer = require('nodemailer');
-const handlebars = require('handlebars');
-const { promisify } = require('util');
-const fs = require('fs');
+import fs from 'fs';
+import handlebars from 'handlebars';
+import { convert } from 'html-to-text';
+import nodemailer from 'nodemailer';
+import { promisify } from 'util';
+
+import * as Constants from './constants';
 
 const readFile = promisify(fs.readFile);
 
-module.exports = class Email {
+export default class Email {
   constructor(user, url) {
     this.to = user.email;
     this.user = user;
@@ -16,7 +18,7 @@ module.exports = class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV.trim() === 'production') {
+    if (process.env.NODE_ENV.trim() === Constants.prodEnvironment) {
       return nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
@@ -45,7 +47,7 @@ module.exports = class Email {
         `./../fruits-store-backend/emails/${template}.html`,
         'utf8'
       ),
-      text: htmlToText.convert(
+      text: convert(
         await readFile(
           `./../fruits-store-backend/emails/${template}.html`,
           'utf8'
@@ -79,4 +81,4 @@ module.exports = class Email {
     };
     await this.newTransport().sendMail(mailOptions);
   }
-};
+}
