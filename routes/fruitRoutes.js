@@ -1,6 +1,7 @@
-const express = require('express');
-const fruitController = require('../controllers/fruitController');
-const authController = require('../controllers/authController');
+import express from 'express';
+
+import * as authController from '../controllers/authController';
+import * as fruitController from '../controllers/fruitController';
 
 const router = express.Router();
 router
@@ -14,4 +15,4 @@ router
   .patch(authController.protect, fruitController.updateFruit)
   .delete(authController.protect, fruitController.deleteFruit);
 
-module.exports = router;
+export default router;

@@ -1,8 +1,8 @@
-const Factory = require('./handlerFactory');
-const Fruit = require('../models/fruitModel');
+import * as Factory from './handlerFactory';
+import Fruit from '../models/fruitModel';
 
-exports.createFruit = Factory.createOne(Fruit);
-exports.updateFruit = Factory.updateOne(Fruit);
-exports.getFruit = Factory.getOne(Fruit);
-exports.getAllFruits = Factory.getAll(Fruit);
-exports.deleteFruit = Factory.deleteOne(Fruit);
+export const createFruit = Factory.createOne(Fruit);
+export const updateFruit = Factory.updateOne(Fruit);
+export const getFruit = Factory.getOne(Fruit);
+export const getAllFruits = Factory.getAll(Fruit);
+export const deleteFruit = Factory.deleteOne(Fruit);
