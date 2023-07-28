@@ -1,12 +1,12 @@
-const htmlToText = require('html-to-text');
-const nodemailer = require('nodemailer');
-const handlebars = require('handlebars');
-const { promisify } = require('util');
-const fs = require('fs');
+import fs from 'fs';
+import handlebars from 'handlebars';
+import htmlToText from 'html-to-text';
+import nodemailer from 'nodemailer';
+import { promisify } from 'util';
 
 const readFile = promisify(fs.readFile);
 
-module.exports = class Email {
+export default class Email {
   constructor(user, url) {
     this.to = user.email;
     this.user = user;
@@ -79,4 +79,4 @@ module.exports = class Email {
     };
     await this.newTransport().sendMail(mailOptions);
   }
-};
+}
