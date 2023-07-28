@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
+import app from './app';
 import C from './utils/log';
 
 /**
@@ -10,8 +11,6 @@ process.on('uncaughtException', (error) => {
   C(`uncaughtException 💥💥 ${error.name}: ${error.message}`);
 });
 dotenv.config({ path: `${__dirname}/config.env` });
-
-const app = require('./app');
 
 /**
  * connect to the database
