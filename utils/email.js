@@ -1,6 +1,6 @@
 import fs from 'fs';
 import handlebars from 'handlebars';
-import htmlToText from 'html-to-text';
+import { convert } from 'html-to-text';
 import nodemailer from 'nodemailer';
 import { promisify } from 'util';
 
@@ -45,7 +45,7 @@ export default class Email {
         `./../fruits-store-backend/emails/${template}.html`,
         'utf8'
       ),
-      text: htmlToText.convert(
+      text: convert(
         await readFile(
           `./../fruits-store-backend/emails/${template}.html`,
           'utf8'
