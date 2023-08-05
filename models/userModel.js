@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  dateCreated: {
+    type: Date,
+  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -52,6 +55,7 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
 
   this.passwordConfirm = undefined;
+  this.dateCreated = new Date();
   next();
 });
 
