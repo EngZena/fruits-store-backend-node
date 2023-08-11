@@ -58,4 +58,5 @@ This is the customer relationship manager website created for technical proof of
 ## Development server
 
 ---
+
 Run `npm start` for a dev server.
