@@ -1,3 +1,4 @@
+import config from 'config';
 import fs from 'fs';
 import handlebars from 'handlebars';
 import { convert } from 'html-to-text';
@@ -14,26 +15,26 @@ export default class Email {
     this.user = user;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this.from = `Fruits store  <${process.env.EMAIL_FROM}>`;
+    this.from = `Fruits store  <${config.get('EMAIL_FROM')}>`;
   }
 
   newTransport() {
-    if (process.env.NODE_ENV.trim() === Constants.prodEnvironment) {
+    if (config.get('NODE_ENV').trim() === Constants.prodEnvironment) {
       return nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
-          from: process.env.EMAIL_FROM,
-          user: process.env.SENBDGRID_USERNAME,
-          pass: process.env.SENBDGRID_PASSWORD,
+          from: config.get('EMAIL_FROM'),
+          user: config.get('SENBDGRID_USERNAME'),
+          pass: config.get('SENBDGRID_PASSWORD'),
         },
       });
     }
     return nodemailer.createTransport({
       host: 'smtp.sendgrid.net',
-      port: process.env.EMAIL_PORT,
+      port: config.get('EMAIL_PORT'),
       auth: {
-        user: process.env.SENBDGRID_USERNAME,
-        pass: process.env.SENBDGRID_PASSWORD,
+        user: config.get('SENBDGRID_USERNAME'),
+        pass: config.get('SENBDGRID_PASSWORD'),
       },
     });
   }

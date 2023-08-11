@@ -1,3 +1,4 @@
+import config from 'config';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
@@ -9,19 +10,19 @@ import catchAsync from '../utils/catchAsync';
 import Email from '../utils/email';
 
 const signToken = (id) =>
-  jwt.sign({ id: id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+  jwt.sign({ id: id }, config.get('JWT_SECRET'), {
+    expiresIn: config.get('JWT_EXPIRES_IN'),
   });
 
 const createAndSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      Date.now() + config.get('JWT_COOKIE_EXPIRES_IN') * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
   };
-  if (process.env.NODE_ENV === Constants.prodEnvironment)
+  if (config.get('NODE_ENV') === Constants.prodEnvironment)
     cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
@@ -143,7 +144,7 @@ export const protect = catchAsync(async (req, res, next) => {
       new AppError('Your are not logged in!, Please log in to get access ', 401)
     );
   }
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, config.get('JWT_SECRET'));
   const freshUser = await User.findById(decoded.id);
   if (!freshUser) {
     return next(new AppError('The user is no longer exist', 401));
