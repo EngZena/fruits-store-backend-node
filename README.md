@@ -12,7 +12,8 @@ This is the customer relationship manager website created for technical proof of
 
   - [mongoose](https://www.npmjs.com/package/mongoose)
   - [nodemon](https://www.npmjs.com/package/nodemon)
-  - [dotenv](https://www.npmjs.com/package/dotenv)
+  - [config](https://www.npmjs.com/package/config)
+  - [cross-env](https://www.npmjs.com/package/cross-env)
   - [eslint](https://eslint.org/)
   - [prettier](https://prettier.io/)
   - [morgan](https://www.npmjs.com/package/morgan)
