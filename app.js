@@ -1,3 +1,4 @@
+import config from 'config';
 import cors from 'cors';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
@@ -30,7 +31,7 @@ app.use(
 /**
  * morgan is a Node.js and Express middleware to log HTTP requests and errors, and simplifies the process
  */
-if (process.env.NODE_ENV === 'development') {
+if (config.get('NODE_ENV') === 'development') {
   app.use(morgan('dev'));
 }
 

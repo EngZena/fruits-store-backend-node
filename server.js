@@ -1,31 +1,29 @@
-import dotenv from 'dotenv';
+import config from 'config';
 import mongoose from 'mongoose';
 
 import app from './app';
 import C from './utils/log';
 
 /**
- * uncaughtException means no code was looking for that execption
+ * uncaughtException means no code was looking for that exception
  */
 process.on('uncaughtException', (error) => {
   C(`uncaughtException 💥💥 ${error.name}: ${error.message}`);
 });
-dotenv.config({ path: `${__dirname}/config.env` });
 
 /**
  * connect to the database
  */
 
 mongoose
-  .connect(process.env.DATABASE_LOCAL, {
+  .connect(config.get('DATABASE_LOCAL'), {
     useNewUrlParser: true,
     autoIndex: true,
   })
   .then(() => C('DB connection successful!'))
   .catch((error) => C('💥💥 DB connection error', error));
 
-const port = process.env.PORT || 3000;
-
+const port = config.get('PORT');
 const server = app.listen(port, () => {
   C(`App running on port ${port}...`);
 });
