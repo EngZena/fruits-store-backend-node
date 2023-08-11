@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node server.js",
-    "start:prod": "SET NODE_ENV=production & nodemon server.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon --exec babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "config": "^3.3.9",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "handlebars": "^4.7.7",
