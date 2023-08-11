@@ -23,6 +23,14 @@ const fruitSchema = new mongoose.Schema({
     enum: ['SUMMER_FRUITS', 'WINTER_FRUITS'],
     default: 'SUMMER_FRUITS',
   },
+  dateCreated: {
+    type: Date,
+  },
+});
+
+fruitSchema.pre('save', async function (next) {
+  this.dateCreated = new Date();
+  next();
 });
 
 const Fruit = mongoose.model('Fruit', fruitSchema);
