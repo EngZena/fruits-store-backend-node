@@ -1,8 +1,8 @@
 import config from 'config';
 import mongoose from 'mongoose';
 
-import app from './app';
-import C from './utils/log';
+import app from './src/app';
+import C from './src/utils/log';
 
 /**
  * uncaughtException means no code was looking for that exception
