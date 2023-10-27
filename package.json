@@ -9,7 +9,9 @@
   "scripts": {
     "start": "nodemon --exec babel-node server.js",
     "start:prod": "cross-env NODE_ENV=production nodemon --exec babel-node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -52,6 +54,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.0",
     "prettier": "^2.8.8"
   }
 }
