@@ -17,6 +17,7 @@ This is the customer relationship manager website created for technical proof of
   - [eslint](https://eslint.org/)
   - [prettier](https://prettier.io/)
   - [morgan](https://www.npmjs.com/package/morgan)
+  - [husky](https://www.npmjs.com/package/husky)
 
 - Authorization purposes
 
